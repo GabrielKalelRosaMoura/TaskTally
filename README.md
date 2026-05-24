@@ -73,3 +73,10 @@ pip install flask
 
 # 4. Run the application
 python app.py
+
+```
+
+<br>
+
+> ⚠️ **Warning**  
+> To refresh the timer, restart the website.
