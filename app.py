@@ -1,179 +1,16 @@
 """
-Time on Task — a tiny Flask web app.
-
-Run it:
-    pip install flask
-    python app.py
-
-Then open http://127.0.0.1:5000 in your browser.
+pen http://127.0.0.1:5001 in your browser.
 """
 
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
-
-# Total minutes accumulated, kept in memory while the server runs.
 total_minutes = 0
-
-PAGE = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Time on Task</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600&family=Space+Mono&display=swap');
-
-    :root {
-      --bg: #0f1115;
-      --panel: #171a21;
-      --line: #2a2f3a;
-      --text: #e7e3da;
-      --muted: #8b8f99;
-      --accent: #d9a441;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(1200px 600px at 50% -10%, #1b1f29 0%, var(--bg) 60%);
-      color: var(--text);
-      font-family: 'Fraunces', Georgia, serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 40px 36px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
-      text-align: center;
-    }
-
-    h1 {
-      font-weight: 300;
-      font-size: 26px;
-      letter-spacing: 0.5px;
-      margin: 0 0 28px;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    input[type="number"] {
-      flex: 1;
-      background: #0f1218;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      color: var(--text);
-      font-family: 'Space Mono', monospace;
-      font-size: 20px;
-      text-align: center;
-      padding: 16px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    input[type="number"]:focus { border-color: var(--accent); }
-
-    button {
-      background: var(--accent);
-      color: #1a1206;
-      border: none;
-      border-radius: 12px;
-      font-family: 'Space Mono', monospace;
-      font-size: 15px;
-      font-weight: 700;
-      padding: 0 22px;
-      cursor: pointer;
-      transition: transform 0.1s, filter 0.2s;
-    }
-    button:hover { filter: brightness(1.08); }
-    button:active { transform: translateY(1px); }
-
-    .total {
-      margin-top: 34px;
-      padding-top: 26px;
-      border-top: 1px solid var(--line);
-    }
-    .total .label {
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    .total .value {
-      font-size: 64px;
-      font-weight: 600;
-      line-height: 1;
-      margin-top: 12px;
-      color: var(--accent);
-    }
-    .total .unit {
-      color: var(--muted);
-      font-size: 16px;
-      font-family: 'Space Mono', monospace;
-    }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>Time on Task</h1>
-
-    <div class="input-row">
-      <input type="number" id="minutes" placeholder="minutes" min="0" step="1">
-      <button onclick="addMinutes()">Confirm</button>
-    </div>
-
-    <div class="total">
-      <div class="label">Total time on task:</div>
-      <div class="value"><span id="total">{{ total }}</span> <span class="unit">min</span></div>
-    </div>
-  </div>
-
-  <script>
-    async function addMinutes() {
-      const field = document.getElementById('minutes');
-      const value = parseInt(field.value, 10);
-      if (isNaN(value)) { field.focus(); return; }
-
-      const res = await fetch('/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ minutes: value })
-      });
-      const data = await res.json();
-      document.getElementById('total').textContent = data.total;
-      field.value = '';
-      field.focus();
-    }
-
-    // Let Enter key confirm too.
-    document.getElementById('minutes').addEventListener('keydown', e => {
-      if (e.key === 'Enter') addMinutes();
-    });
-  </script>
-</body>
-</html>
-"""
-
+# Total minutes accumulated, kept in memory while the server runs.
 
 @app.route("/")
 def home():
-    return render_template_string(PAGE, total=total_minutes)
+    return render_template("index.html", total=total_minutes)
 
 
 @app.route("/add", methods=["POST"])
@@ -190,4 +27,4 @@ def add():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
