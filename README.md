@@ -16,11 +16,13 @@ Enter your minutes, confirm the entry, and watch your total grow.
 
 TaskTally was built from a simple need: tracking how many minutes I spend focused on a single task.
 
-I wanted a tool that could quickly record my focused time without unnecessary features. Most apps I found included additional and unnecessary functionality that made it more complicated than it needed to be.
+While studying, I wanted a tool that could quickly record my focused time without unnecessary features. Most apps I found included additional and unnecessary functionality that made it more complicated than it needed to be.
 
 With TaskTally I wanted the experience intentionally minimal.
 
-You enter the number of minutes spent on a task, confirm it, and the app adds that value to a running total. There are no accounts, no setup process, and no distractions — just a clear total of your focused time.
+You enter the number of minutes spent on a task, confirm it, and the app adds that value to a running total. 
+
+Note: used python since it was what I was studying when I got the idea for TaskTally
 
 <br>
 
