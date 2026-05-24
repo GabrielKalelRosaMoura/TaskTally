@@ -1,59 +1,73 @@
-TaskTally
-A dead-simple web app for tracking the total minutes you've spent focused on a task. Enter your minutes, hit confirm, and watch your running total grow.
+<div align="center">
 
-The Story
-I was deep in a study session and wanted a way to track how much focused time I was putting into a single task. So I did what anyone would do — I went looking for an app or website to do it for me.
-What I found was the opposite of what I wanted. Every option was bloated: accounts to create, dashboards I didn't need, timers and tags and reports and notifications, all to answer one tiny question — how many minutes have I actually spent on this?
-None of them did the one simple thing I was after, without making me wade through ten features I'd never touch.
-So I built it myself. TaskTally does exactly one thing and nothing else: you type in the minutes, you confirm, and it keeps a running total. No accounts, no clutter, no setup. The whole point is that it stays out of your way.
+# TaskTally
 
-Features
+A simple web app for tracking the amount of focused time spent on a task.
 
-A single input for adding minutes
-A confirm button (or just press Enter)
-A live running total that updates instantly, without reloading the page
+Enter your minutes, confirm the entry, and watch your total grow.
 
-That's it — and that's intentional.
+<img width="969" height="647" alt="Screenshot 2026-05-24 at 19 25 22" src="https://github.com/user-attachments/assets/7b96cefe-c492-4ef9-a352-1936e941b28a" />
 
-Tech Stack
+</div>
 
-Python — application logic
-Flask — lightweight web framework handling the routes and requests
-HTML / CSS / JavaScript — the frontend, with a fetch call that updates the total without a page refresh
+<br>
 
-Flask was chosen deliberately over a heavier framework like Django. For a project this focused, a micro-framework provides exactly what's needed — URL routing and request handling — without the overhead of features the project would never use. Matching the tool to the size of the problem was part of the point.
+# **What is it?**
 
-How It Works
-The app runs on a small Flask server with two routes:
+TaskTally was built from a simple need: tracking how many minutes I spend focused on a single task.
 
-GET / serves the main page with the current total.
-POST /add receives the entered minutes, adds them to the running total, and returns the new value as JSON.
+I wanted a tool that could quickly record my focused time without unnecessary features. Most apps I found included additional and unnecessary functionality that made it more complicated than it needed to be.
 
-When you click Confirm, a bit of JavaScript sends your number to /add in the background, receives the updated total, and updates just that number on screen — so the page never fully reloads.
-The total is currently held in memory on the server, which keeps the app simple. The natural next step would be to persist it to a file or a database so it survives restarts.
+With TaskTally I wanted the experience intentionally minimal.
 
-Running It Locally
-You'll need Python 3 installed.
-bash# 1. Clone the repository
-git clone https://github.com/YOUR-USERNAME/tasktally.git
+You enter the number of minutes spent on a task, confirm it, and the app adds that value to a running total. There are no accounts, no setup process, and no distractions — just a clear total of your focused time.
+
+<br>
+
+# **Tech Stack**
+
+| Backend | Frontend | Data Flow |
+|---|---|---|
+| Python, Flask | HTML, CSS, JavaScript | Fetch API, JSON |
+
+<br>
+
+## How does it work?
+
+TaskTally runs on a small Flask server with two main routes:
+
+| Route | Method | Description |
+|---|---|---|
+| `/` | `GET` | Serves the main page and displays the current total |
+| `/add` | `POST` | Receives the entered minutes, adds them to the total, and returns the updated value as JSON |
+
+When the user clicks **Confirm**, JavaScript sends the entered number to the `/add` route using `fetch`.
+
+The server updates the running total and returns the new value as JSON. The frontend then updates only the displayed total, without reloading the entire page.
+
+The total is currently stored in server memory, keeping the project simple and lightweight.
+
+<br>
+
+## Run it locally
+### -> Requirements
+
+- Python 3
+- Flask
+
+### -> Installation
+
+```bash
+# 1. Clone the repository
+git clone [https://github.com/GabrielKalelRosaMoura/TaskTally.git]
 cd tasktally
 
 # 2. Create and activate a virtual environment
 python3 -m venv venv
-source venv/bin/activate        # On Windows: venv\Scripts\activate
+source venv/bin/activate        # Windows: venv\Scripts\activate
 
 # 3. Install dependencies
 pip install flask
 
-# 4. Run the app
+# 4. Run the application
 python app.py
-Then open http://127.0.0.1:5000 in your browser.
-To stop the server, press Ctrl + C in the terminal.
-
-Future Improvements
-
-Persist the total to a database (e.g. SQLite) so it survives restarts
-Support multiple named tasks, each with its own total
-A reset button
-Deploy it publicly with a production server (Gunicorn) on a host like Render or Railway
-
